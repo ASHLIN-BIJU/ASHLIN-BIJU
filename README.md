@@ -14,6 +14,7 @@
 
   [![Profile](https://img.shields.io/badge/Portfolio-GitHub-0f172a?style=for-the-badge&logo=github)](https://github.com/ASHLIN-BIJU)
   [![Location](https://img.shields.io/badge/Based_in-India-14b8a6?style=for-the-badge&logo=googlemaps&logoColor=white)](https://github.com/ASHLIN-BIJU)
+  [![Email](https://img.shields.io/badge/Let's_talk-Email-2563eb?style=for-the-badge&logo=gmail&logoColor=white)](mailto:ashlinbiju2006@gmail.com)
 
 </div>
 
@@ -55,9 +56,10 @@
       <p><code>Laravel</code> <code>Reverb</code> <code>MySQL</code> <code>REST APIs</code></p>
     </td>
     <td width="50%" valign="top">
-      <h3><a href="https://github.com/ASHLIN-BIJU/Trading-Journal">Trading Journal</a></h3>
-      <p>Multi-account trade tracking with performance analytics, equity insights, and risk-management tools.</p>
-      <p><code>Laravel</code> <code>Blade</code> <code>Alpine.js</code> <code>PostgreSQL</code></p>
+      <h3><a href="https://github.com/ASHLIN-BIJU/NutriFlow-AI">NutriFlow AI</a></h3>
+      <p>AI-assisted meal planning based on dietary goals, budget, preferences, and macro requirements.</p>
+      <p><code>Next.js</code> <code>TypeScript</code> <code>Supabase</code> <code>Gemini</code></p>
+      <p><a href="https://nutriflowai.vercel.app">View live application →</a></p>
     </td>
   </tr>
   <tr>
@@ -67,10 +69,9 @@
       <p><code>Laravel</code> <code>Vue.js</code> <code>Inertia.js</code> <code>TypeScript</code></p>
     </td>
     <td width="50%" valign="top">
-      <h3><a href="https://github.com/ASHLIN-BIJU/NutriFlow-AI">NutriFlow AI</a></h3>
-      <p>AI-assisted meal planning based on dietary goals, budget, preferences, and macro requirements.</p>
-      <p><code>Next.js</code> <code>TypeScript</code> <code>Supabase</code> <code>Gemini</code></p>
-      <p><a href="https://nutriflowai.vercel.app">View live application →</a></p>
+      <h3><a href="https://github.com/ASHLIN-BIJU/NOOLU">NOOLU Survey Experience</a></h3>
+      <p>An animated multi-step survey with smooth transitions, responsive interactions, and Google Forms integration.</p>
+      <p><code>React</code> <code>Vite</code> <code>Framer Motion</code> <code>Google Forms</code></p>
     </td>
   </tr>
 </table>
@@ -91,4 +92,3 @@ outputs in Cloudflare R2, and reports results through signed callbacks.
 <div align="center">
   <sub>Build with purpose. Learn continuously. Ship reliable software.</sub>
 </div>
-
