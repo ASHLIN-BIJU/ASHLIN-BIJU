@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="320" viewBox="0 0 1200 320" role="img" aria-labelledby="title desc">
+  <title id="title">Ashlin Biju — Full-stack developer</title>
+  <desc id="desc">Dark navy developer profile banner with teal and blue accents.</desc>
+  <defs>
+    <linearGradient id="background" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#07111f"/>
+      <stop offset="0.55" stop-color="#0f2742"/>
+      <stop offset="1" stop-color="#102d38"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#38bdf8"/>
+      <stop offset="1" stop-color="#2dd4bf"/>
+    </linearGradient>
+    <pattern id="grid" width="38" height="38" patternUnits="userSpaceOnUse">
+      <path d="M38 0H0V38" fill="none" stroke="#94a3b8" stroke-opacity="0.07"/>
+    </pattern>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="18"/>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="320" rx="24" fill="url(#background)"/>
+  <rect width="1200" height="320" rx="24" fill="url(#grid)"/>
+
+  <circle cx="1010" cy="66" r="105" fill="#38bdf8" fill-opacity="0.12" filter="url(#glow)"/>
+  <circle cx="1115" cy="266" r="145" fill="#2dd4bf" fill-opacity="0.12" filter="url(#glow)"/>
+  <path d="M930 58h146l70 70-70 70H930l-70-70z" fill="none" stroke="url(#accent)" stroke-width="2" stroke-opacity="0.45"/>
+  <path d="M1000 86l42 42-42 42M938 86l-42 42 42 42" fill="none" stroke="#e2e8f0" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" stroke-opacity="0.82"/>
+
+  <rect x="72" y="65" width="82" height="8" rx="4" fill="url(#accent)"/>
+  <text x="72" y="148" fill="#f8fafc" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="58" font-weight="700" letter-spacing="1">Ashlin Biju</text>
+  <text x="74" y="201" fill="#a7f3d0" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="24" font-weight="600" letter-spacing="3">FULL-STACK DEVELOPER</text>
+  <text x="74" y="249" fill="#cbd5e1" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="20">Web products · Real-time systems · AI integrations · Automation</text>
+
+  <rect x="0" y="310" width="1200" height="10" rx="0" fill="url(#accent)"/>
+</svg>
