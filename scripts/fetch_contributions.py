@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """
-Scrape real daily contribution counts from GitHub's public, unauthenticated
+Scrape real daily contribution counts for the current calendar year (Jan 1 -
+Dec 31, override with GH_PROFILE_YEAR) from GitHub's public, unauthenticated
 contributions endpoint (the same fragment the profile page itself uses) and
 write data/contributions.json with the raw days plus derived stats
 (current streak, longest streak, best day, monthly totals).
@@ -18,7 +19,8 @@ import requests
 from bs4 import BeautifulSoup
 
 USERNAME = os.environ.get("GH_PROFILE_USER", "ASHLIN-BIJU")
-URL = f"https://github.com/users/{USERNAME}/contributions"
+YEAR = int(os.environ.get("GH_PROFILE_YEAR") or datetime.datetime.now(datetime.timezone.utc).year)
+URL = f"https://github.com/users/{USERNAME}/contributions?from={YEAR}-01-01&to={YEAR}-12-31"
 OUT_PATH = os.path.join(os.path.dirname(__file__), "..", "data", "contributions.json")
 
 
@@ -84,7 +86,10 @@ def compute_longest_streak(days):
     return longest, longest_start, longest_end
 
 
-def build_data(days):
+def build_data(all_days):
+    # the year view includes future dates; stats only look at days so far
+    today = datetime.datetime.now(datetime.timezone.utc).date().isoformat()
+    days = [d for d in all_days if d["date"] <= today]
     total = sum(d["count"] for d in days)
     active_days = sum(1 for d in days if d["count"] > 0)
     best = max(days, key=lambda d: d["count"])
@@ -99,8 +104,9 @@ def build_data(days):
 
     return {
         "username": USERNAME,
+        "year": YEAR,
         "generated_at": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
-        "range": {"start": days[0]["date"], "end": days[-1]["date"]},
+        "range": {"start": all_days[0]["date"], "end": all_days[-1]["date"]},
         "total_contributions": total,
         "active_days": active_days,
         "avg_per_active_day": round(total / active_days, 1) if active_days else 0,
@@ -108,7 +114,8 @@ def build_data(days):
         "longest_streak": {"length": long_len, "start": long_start, "end": long_end},
         "best_day": {"date": best["date"], "count": best["count"]},
         "monthly": monthly_list,
-        "days": days,
+        "days_elapsed": len(days),
+        "days": all_days,
     }
 
 

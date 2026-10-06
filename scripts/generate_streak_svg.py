@@ -15,7 +15,8 @@ def get_data(user):
     if os.path.exists(snap):
         d = json.load(open(snap))
         if d.get("username", "").lower() == user.lower() and all("level" in x for x in d["days"]):
-            return {"contributions": d["days"], "total": {"lastYear": d["total_contributions"]}}
+            return {"contributions": d["days"], "total": {"lastYear": d["total_contributions"]},
+                    "year": d.get("year")}
     url = f"https://github-contributions-api.jogruber.de/v4/{user}?y=last"
     try:
         with urllib.request.urlopen(url, timeout=25) as r:
@@ -31,6 +32,8 @@ def get_data(user):
 data = get_data(USER)
 contribs = data["contributions"]
 total = data["total"]["lastYear"]
+YEAR = data.get("year")
+TODAY = datetime.date.today().isoformat()
 
 # ---- layout ----
 CELL, GAP, RAD, LEFT, TOP = 13, 3, 2.5, 34, 24
@@ -40,7 +43,10 @@ GRAY = "#7d8590"
 MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
 
 n = len(contribs)
-NW = (n + 6) // 7
+# a calendar year rarely starts on a Sunday: shift so each day sits in its weekday row
+sd = datetime.date.fromisoformat(contribs[0]["date"])
+OFF = (sd.weekday() + 1) % 7       # Sunday = row 0
+NW = (n + OFF + 6) // 7
 W = LEFT + NW*(CELL+GAP) + 6
 H = TOP + 7*(CELL+GAP) + 22
 
@@ -49,10 +55,9 @@ REVEAL, DUR = 3.6, 0.55
 maxorder = (NW-1) + 6*0.55
 
 rects, labels = [], []
-sd = datetime.date.fromisoformat(contribs[0]["date"])
 last_m = None
 for wk in range(NW):
-    d = sd + datetime.timedelta(days=wk*7)
+    d = max(sd, sd + datetime.timedelta(days=wk*7 - OFF))
     if d.month != last_m:
         last_m = d.month
         labels.append(f'<text class="lbl" x="{LEFT+wk*(CELL+GAP)}" y="{TOP-8}">{MONTHS[d.month-1]}</text>')
@@ -60,10 +65,16 @@ for name, r in [("Mon",1),("Wed",3),("Fri",5)]:
     labels.append(f'<text class="lbl" x="2" y="{TOP+r*(CELL+GAP)+CELL-2}">{name}</text>')
 
 for i, c in enumerate(contribs):
-    wk, row, lvl = i//7, i%7, c["level"]
+    wk, row, lvl = (i + OFF)//7, (i + OFF)%7, c["level"]
     x = LEFT + wk*(CELL+GAP); y = TOP + row*(CELL+GAP)
     delay = round((wk + row*0.55)/maxorder * REVEAL, 3)
     cls = "c g" if lvl >= 1 else "c e"
+    if c["date"] > TODAY:   # rest of the year: faint outline only
+        rects.append(
+            f'<rect class="c f" x="{x+0.5}" y="{y+0.5}" width="{CELL-1}" height="{CELL-1}" rx="{RAD}" '
+            f'fill="none" stroke="{COLORS[0]}" style="animation-delay:{delay}s"/>'
+        )
+        continue
     rects.append(
         f'<rect class="{cls}" x="{x}" y="{y}" width="{CELL}" height="{CELL}" rx="{RAD}" '
         f'fill="{COLORS[lvl]}" style="animation-delay:{delay}s"/>'
@@ -82,7 +93,7 @@ svg = f'''<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewB
 <rect width="{W}" height="{H}" fill="none"/>
 {''.join(labels)}
 {''.join(rects)}
-<text class="total" x="{LEFT}" y="{H-6}">{total:,} contributions in the last year</text>
+<text class="total" x="{LEFT}" y="{H-6}">{total:,} contributions in {YEAR or "the last year"}</text>
 </svg>'''
 
 open(OUT, "w").write(svg)

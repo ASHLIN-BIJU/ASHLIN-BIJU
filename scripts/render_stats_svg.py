@@ -62,14 +62,16 @@ def span(s):
 
 data = json.load(open(SRC))
 cur, lng, best = data["current_streak"], data["longest_streak"], data["best_day"]
-n_days = len(data["days"])
+n_days = data.get("days_elapsed", len(data["days"]))
+period = f'in {data["year"]}' if data.get("year") else "in the last year"
+so_far = " so far" if data.get("year") else ""
 
 # (label, value, suffix, caption, accent)
 tiles = [
     ("current streak", cur["length"], " days", span(cur), GREEN),
     ("longest streak", lng["length"], " days", span(lng), INK),
-    ("contributions", data["total_contributions"], "", "in the last year", INK),
-    ("active days", data["active_days"], f" / {n_days}", f'{data["active_days"] / n_days:.0%} of the year', INK),
+    ("contributions", data["total_contributions"], "", period, INK),
+    ("active days", data["active_days"], f" / {n_days}", f'{data["active_days"] / n_days:.0%} of the year{so_far}', INK),
     ("best day", best["count"], "", short(best["date"]), INK),
     ("avg / active day", data["avg_per_active_day"], "", "contributions", INK),
 ]
@@ -132,13 +134,15 @@ for i, (label, value, suffix, caption, accent) in enumerate(tiles):
     parts.append('</g>')
 
 # ---- monthly bars --------------------------------------------------------
-monthly = data["monthly"]
+# skip months that haven't started yet
+this_month = datetime.date.today().strftime("%Y-%m")
+monthly = [m for m in data["monthly"] if m["month"] <= this_month]
 chart_x, chart_w = PAD, W - PAD * 2
 chart_h = H - PAD - CHART_TOP
 parts.append(f'<g class="t" style="animation-delay:{BAR_START - 0.3:.2f}s">')
 parts.append(f'<rect x="{chart_x}" y="{CHART_TOP}" width="{chart_w}" height="{chart_h}" rx="10" '
              f'fill="{TILE}" stroke="{FRAME}"/>')
-parts.append(f'<text x="{chart_x+24}" y="{CHART_TOP+40}" fill="{MUTED}" font-size="22">$ contributions / month</text>')
+parts.append(f'<text x="{chart_x+24}" y="{CHART_TOP+40}" fill="{MUTED}" font-size="22">$ contributions / month {data.get("year", "")}</text>')
 parts.append('</g>')
 
 plot_top = CHART_TOP + 64
