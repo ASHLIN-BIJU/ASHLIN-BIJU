@@ -1,21 +1,41 @@
 <div align="center">
-  <img src="./assets/banner.svg" width="100%" alt="Ashlin Biju — Full-stack developer" />
+
+<!-- animated contribution graph: real data, regenerated daily by
+     .github/workflows/update-profile-art.yml -->
+
+<h3><code>ashlin@github ~ $ ./contributions.sh</code></h3>
+
+<img src="./contrib-heatmap.svg" width="860" alt="Ashlin's GitHub contribution graph — auto-refreshed daily" />
+
+<br>
+<br>
+
+<!-- ascii portrait (left) + streak/numbers card (right); both 840x880.
+     portrait: python scripts/prep_photo.py && python scripts/make_ascii_svg.py
+     stats:    python scripts/render_stats_svg.py (same daily workflow) -->
+
+<h3><code>ashlin@github ~ $ whoami</code></h3>
+
+<table>
+<tr>
+<td valign="top"><img src="./ashlin-ascii.svg" width="420" alt="Ashlin C Biju — ASCII portrait" /></td>
+<td valign="top"><img src="./stats.svg" width="420" alt="Ashlin's GitHub streak and contribution stats — auto-refreshed daily" /></td>
+</tr>
+</table>
+
+<br>
+
+<h3><code>ashlin@github ~ $ ./links.sh</code></h3>
+
+<p><b>Full-stack developer · APIs · Real-time systems · Practical AI</b></p>
+
+[![Email](https://img.shields.io/badge/Email-ashlinbiju2006%40gmail.com-0d1117?style=for-the-badge&logo=gmail&logoColor=white)](mailto:ashlinbiju2006@gmail.com)
+[![Repositories](https://img.shields.io/badge/Repositories-ASHLIN--BIJU-0d1117?style=for-the-badge&logo=github&logoColor=white)](https://github.com/ASHLIN-BIJU?tab=repositories)
+[![Instagram](https://img.shields.io/badge/Instagram-__itz__me__ashlin-E4405F?style=for-the-badge&logo=instagram&logoColor=white)](https://www.instagram.com/_itz_me_ashlin)
+
 </div>
 
-<h2 align="center">Full-stack developer building APIs, real-time systems, and practical AI products.</h2>
-
-<p align="center">
-  I work across Laravel/PHP, Vue and TypeScript, Go/Gin, and Next.js—turning ideas
-  into reliable products with clear interfaces, maintainable backends, and automated delivery.
-</p>
-
-<p align="center">
-  <a href="mailto:ashlinbiju2006@gmail.com">Email</a>
-  ·
-  <a href="https://github.com/ASHLIN-BIJU?tab=repositories">Repositories</a>
-  ·
-  <a href="https://www.instagram.com/_itz_me_ashlin">Instagram</a>
-</p>
+---
 
 ## What I build
 
