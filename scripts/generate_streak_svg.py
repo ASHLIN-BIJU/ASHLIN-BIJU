@@ -37,7 +37,9 @@ TODAY = datetime.date.today().isoformat()
 
 # ---- layout ----
 CELL, GAP, RAD, LEFT, TOP = 13, 3, 2.5, 34, 24
-COLORS = ["#161b22", "#0e4429", "#006d32", "#26a641", "#39d353"]
+# green-tinted empties + brighter levels so the whole grid reads green
+COLORS = ["#10261a", "#1a7f37", "#2ea043", "#3fd162", "#6af58c"]
+FUTURE = "#163322"
 FLASH = "#b4ffaa"
 GRAY = "#7d8590"
 MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
@@ -72,24 +74,26 @@ for i, c in enumerate(contribs):
     if c["date"] > TODAY:   # rest of the year: faint outline only
         rects.append(
             f'<rect class="c f" x="{x+0.5}" y="{y+0.5}" width="{CELL-1}" height="{CELL-1}" rx="{RAD}" '
-            f'fill="none" stroke="{COLORS[0]}" style="animation-delay:{delay}s"/>'
+            f'fill="none" stroke="{FUTURE}" style="animation-delay:{delay}s"/>'
         )
         continue
+    glow = ' filter="url(#glow)"' if lvl >= 3 else ""
     rects.append(
         f'<rect class="{cls}" x="{x}" y="{y}" width="{CELL}" height="{CELL}" rx="{RAD}" '
-        f'fill="{COLORS[lvl]}" style="animation-delay:{delay}s"/>'
+        f'fill="{COLORS[lvl]}"{glow} style="animation-delay:{delay}s"/>'
     )
 
 svg = f'''<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}" font-family="-apple-system,Segoe UI,Helvetica,Arial,sans-serif">
 <style>
   text.lbl {{ fill:{GRAY}; font-size:13px; font-weight:600; }}
-  text.total {{ fill:#e6edf3; font-size:15px; font-weight:700; }}
+  text.total {{ fill:#3fd162; font-size:15px; font-weight:700; }}
   .c {{ transform-box:fill-box; transform-origin:center; opacity:0; animation:pop {DUR}s ease-out both; }}
   .g {{ animation:pop {DUR}s ease-out both, flash {DUR+0.15}s ease-out both; }}
   @keyframes pop {{ 0%{{opacity:0;transform:scale(.2)}} 60%{{opacity:1;transform:scale(1.1)}} 100%{{opacity:1;transform:scale(1)}} }}
   @keyframes flash {{ 0%{{filter:brightness(2.4)}} 45%{{filter:brightness(2.4)}} 100%{{filter:brightness(1)}} }}
   @media (prefers-reduced-motion: reduce) {{ .c {{ opacity:1 !important; animation:none !important; }} }}
 </style>
+<defs><filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
 <rect width="{W}" height="{H}" fill="none"/>
 {''.join(labels)}
 {''.join(rects)}
